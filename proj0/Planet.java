@@ -35,20 +35,12 @@ public class Planet{
 	}
 
 	public double calcForceExertedByX(Planet p){
-		double dx=xxPos-p.xxPos;
-		if (dx>0){
-			return calcForceExertedBy(p)*dx/calcDistance(p);
-		} else {
-		return -calcForceExertedBy(p)*dx/calcDistance(p);
-		}
+		double dx=p.xxPos-xxPos;
+		return calcForceExertedBy(p)*dx/calcDistance(p);
 	}
 	public double calcForceExertedByY(Planet p){	
-		double dy=yyPos-p.yyPos;
-		if (dy>0){
-			return calcForceExertedBy(p)*dy/calcDistance(p);
-		} else {
-		return -calcForceExertedBy(p)*dy/calcDistance(p);
-		}
+		double dy=p.yyPos-yyPos;
+		return calcForceExertedBy(p)*dy/calcDistance(p);
 	}
 	
 	public double calcNetForceExertedByX(Planet[] allPlanet){
