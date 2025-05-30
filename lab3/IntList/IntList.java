@@ -150,7 +150,7 @@ public class IntList {
             p=p.rest;
             q=q.rest;
         }
-        return null;
+        return head;
     }
 
 
