@@ -67,13 +67,13 @@ public class ArrayDeque<T> {
 
     public T removeFirst() {
         T item=array[first];
-        first = (first - 1 + capacity) % capacity;
+        first = (first - 1) % capacity;
         size--;
         update();
         return item;
     }
     public T removeLast() {
-        last = (last -1 + capacity) % capacity;
+        last = (last -1) % capacity;
         T item = array[last];
         size--;
         update();
