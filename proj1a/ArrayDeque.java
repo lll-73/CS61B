@@ -19,8 +19,8 @@ public class ArrayDeque<T> {
     private void update() {
         if (capacity == size){
             resize(capacity * 2);
-        } else if (size > 0 && size * 4 < capacity && capacity >= 16){
-            resize((Math.max(capacity / 2,16)));
+        } else if (size > 0 && size * 4 < capacity && capacity >= 16) {
+            resize((Math.max(capacity / 2, 16)));
         }
     }
     //resize the array
@@ -52,7 +52,7 @@ public class ArrayDeque<T> {
     }
 
     public int size() {
-        return Math.max(0,size);
+        return Math.max(0, size);
     }
 
     public void printDeque() {
@@ -66,21 +66,21 @@ public class ArrayDeque<T> {
     }
 
     public T removeFirst() {
-        T item=array[first];
+        T item = array[first];
         first = (first + 1) % capacity;
         size--;
         update();
         return item;
     }
     public T removeLast() {
-        last = (last -1 + capacity) % capacity;
+        last = (last - 1 + capacity) % capacity;
         T item = array[last];
         size--;
         update();
         return item;
     }
 
-    public T get(int index){
+    public T get(int index) {
         if (index < 0 || index >= size) {
             return null;
         }
