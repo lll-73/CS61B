@@ -17,7 +17,7 @@ public class ArrayDeque<T> {
     }
 
     private void update() {
-        if (capacity == size && (last) % capacity == first){
+        if (capacity == size){
             resize(capacity * 2);
         } else if (size > 0 && size * 4 < capacity && capacity >= 16){
             resize((Math.max(capacity / 2,16)));
@@ -26,13 +26,10 @@ public class ArrayDeque<T> {
     //resize the array
     private void resize(int newcapacity) {
         T[] newArray = (T[]) new Object[newcapacity];
-        if (first + size -1 <= capacity) {
-            System.arraycopy(array, first, newArray, 0, size);
-            last = size;
-        } else {
-            System.arraycopy(array, first, newArray, 0, capacity - first);
-            System.arraycopy(array, 0, newArray, capacity - first + 1, size - capacity + first);
-            last = size;
+        int index = first;
+        for (int i = 0; i < size; i++) {
+            newArray[i] = array[index];
+            index = (index + 1) % capacity;
         }
         array = newArray;
         capacity = newcapacity;
@@ -40,11 +37,7 @@ public class ArrayDeque<T> {
 
     public void addFirst(T item) {
         update();
-        if (first == 0) {
-            first = capacity - 1;
-        } else {
-            first = first - 1;
-        }
+        first = (first - 1 + capacity) % capacity;
         array[first] = item;
         size = size + 1;
     }
@@ -52,16 +45,12 @@ public class ArrayDeque<T> {
     public void addLast(T item) {
         update();
         array[last] = item;
-        if (last == capacity - 1) {
-            last = 0;
-        } else {
-            last = last + 1;
-        }
+        last = (last + 1) % capacity;
         size = size + 1;
     }
 
     public int size() {
-        return size;
+        return Math.max(0,size);
     }
 
     public void printDeque() {
@@ -77,21 +66,13 @@ public class ArrayDeque<T> {
     public T removeFirst() {
         T item=array[first];
         array[first] = null;
-        if (first == capacity - 1) {
-            first = 0;
-        } else {
-            first = first - 1;
-        }
+        first = (first - 1 + capacity) % capacity;
         size--;
         update();
         return item;
     }
     public T removeLast() {
-        if (last == 0) {
-            last = capacity - 1;
-        } else {
-            last = last - 1;
-        }
+        last = (last -1 + capacity) % capacity;
         T item = array[last];
         array[last] = null;
         size--;
