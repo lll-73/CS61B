@@ -1,5 +1,3 @@
-import static jdk.internal.jrtfs.JrtFileAttributeView.AttrID.size;
-
 public class ArrayDeque<T> {
     private T[] array;
     private int size;
