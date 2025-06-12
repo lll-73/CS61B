@@ -85,7 +85,7 @@ public class ArrayDeque<T> {
             return null;
         }
         int i = first;
-        for (int j = 0; j <= index; j++) {
+        for (int j = 0; j < index; j++) {
             i = (i + 1) % capacity;
         }
         return array[i];
