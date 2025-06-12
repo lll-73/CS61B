@@ -17,7 +17,7 @@ public class ArrayDeque<T> {
     }
 
     private void update() {
-        if (capacity == size){
+        if (capacity == size && (last) % capacity == first){
             resize(capacity * 2);
         } else if (size > 0 && size * 4 < capacity && capacity >= 16){
             resize((Math.max(capacity / 2,16)));
@@ -76,6 +76,7 @@ public class ArrayDeque<T> {
 
     public T removeFirst() {
         T item=array[first];
+        array[first] = null;
         if (first == capacity - 1) {
             first = 0;
         } else {
@@ -92,6 +93,7 @@ public class ArrayDeque<T> {
             last = last - 1;
         }
         T item = array[last];
+        array[last] = null;
         size--;
         update();
         return item;
