@@ -3,40 +3,43 @@ public class ArrayDeque<T> {
     private int size;
     private int first;
     private int last;
-    public ArrayDeque(){
+    private int capacity;
+    public ArrayDeque() {
         size = 0;
         first = 0;
         last = 0;
+        capacity = 8;
         T[] array = (T[]) new Object[8];
     }
 
-    public boolean isEmpty(){
+    public boolean isEmpty() {
         return size == 0;
     }
 
-    private void update(){
-        if (array.length == size){
-            resize(array.length*2);
-        } else if (size > 0 && size * 4 < array.length && array.length >= 16){
-            resize((Math.max(array.length / 2,16)));
+    private void update() {
+        if (capacity == size){
+            resize(capacity * 2);
+        } else if (size > 0 && size * 4 < capacity && capacity >= 16){
+            resize((Math.max(capacity / 2,16)));
         }
     }
     //resize the array
-    private void resize(int capacity){
-        T[] newArray = (T[]) new Object[capacity];
-        if (first + size -1 <= array.length) {
-            System.arraycopy(array,first,newArray,first,size);
+    private void resize(int newcapacity) {
+        T[] newArray = (T[]) new Object[newcapacity];
+        if (first + size -1 <= capacity) {
+            System.arraycopy(array, first, newArray, first, size);
         } else {
-            System.arraycopy(array,first,newArray,first,array.length-first);
-            System.arraycopy(array,0,newArray,first+array.length-first,size-array.length+first);
+            System.arraycopy(array, first, newArray, first, capacity-first);
+            System.arraycopy(array, 0, newArray, first + capacity - first, size - capacity + first);
         }
         array = newArray;
+        capacity = newcapacity;
     }
 
-    public void addFirst(T item){
+    public void addFirst(T item) {
         update();
-        if (first == 0){
-            first = array.length - 1;
+        if (first == 0) {
+            first = capacity - 1;
         } else {
             first = first - 1;
         }
@@ -44,9 +47,9 @@ public class ArrayDeque<T> {
         size = size + 1;
     }
 
-    public void addLast(T item){
+    public void addLast(T item) {
         update();
-        if (last == array.length - 1){
+        if (last == capacity - 1) {
             last = 0;
         } else {
             last = last + 1;
@@ -55,33 +58,33 @@ public class ArrayDeque<T> {
         size = size + 1;
     }
 
-    public int size(){
+    public int size() {
         return size;
     }
 
-    public void printDeque(){
-        if(size + first - 1> array.length) {
-            for (int i = first;i < array.length; i++) {
+    public void printDeque() {
+        if (size + first - 1 > capacity) {
+            for (int i = first; i < capacity; i++) {
                 System.out.print(array[i]);
                 System.out.print(" ");
             }
-            for(int i = 0;i < size - array.length + first;i++){
+            for(int i = 0; i < size - capacity + first; i++) {
                 System.out.print(array[i]);
                 System.out.print(" ");
             }
-        }else{
-            for (int i = first;i < first + size;i++){
+        } else {
+            for (int i = first; i < first + size; i++) {
                 System.out.print(array[i]);
                 System.out.print(" ");
             }
         }
         System.out.println();
     }
-    public T removeFirst(){
+    public T removeFirst() {
         T item=array[first];
-        if(first == array.length - 1){
+        if (first == capacity - 1) {
             first = 0;
-        }else{
+        } else {
             first = first - 1;
         }
         size--;
@@ -90,9 +93,9 @@ public class ArrayDeque<T> {
     }
     public T removeLast(){
         T item = array[last];
-        if(last == 0){
-            last = array.length - 1;
-        }else{
+        if (last == 0) {
+            last = capacity - 1;
+        } else {
             last = last - 1;
         }
         size--;
@@ -101,18 +104,18 @@ public class ArrayDeque<T> {
     }
 
     public T get(int index){
-        if(index < 0 || index >= first + size){
+        if (index < 0 || index >= first + size) {
             return null;
         }
-        if (first + size - 1<= array.length) {
+        if (first + size - 1 <= capacity) {
             int i = index + first;
             return array[i];
         } else {
             int i = index + first;
-            if(i<array.length){
+            if (i < capacity) {
                 return array[i];
             } else {
-                i = i - array.length;
+                i = i - capacity;
                 return array[i];
             }
         }
