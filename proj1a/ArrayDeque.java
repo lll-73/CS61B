@@ -31,6 +31,8 @@ public class ArrayDeque<T> {
             newArray[i] = array[index];
             index = (index + 1) % capacity;
         }
+        first = 0;
+        last = size;
         array = newArray;
         capacity = newcapacity;
     }
@@ -65,7 +67,6 @@ public class ArrayDeque<T> {
 
     public T removeFirst() {
         T item=array[first];
-        array[first] = null;
         first = (first - 1 + capacity) % capacity;
         size--;
         update();
@@ -74,14 +75,13 @@ public class ArrayDeque<T> {
     public T removeLast() {
         last = (last -1 + capacity) % capacity;
         T item = array[last];
-        array[last] = null;
         size--;
         update();
         return item;
     }
 
     public T get(int index){
-        if (index < 0 || index >= first + size) {
+        if (index < 0 || index >= size) {
             return null;
         }
         int i = first;
